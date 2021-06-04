@@ -16,7 +16,7 @@ title: Working Title
 authors: 
   - ${author_string}
 date: $(date '+%Y-%m-%d')
-state: preproposal 
+state: ideation 
 ---
 EOF
 )
