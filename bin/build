@@ -13,7 +13,7 @@ toc=$(cat <<EOF
 EOF
 )
 
-for f in $(find dist/ -name "*.md"); do
+for f in $(find dist/ -name "*.md" | sort -n); do
   dir="$(dirname $f)"  
   dir="$(basename $dir)" 
 
