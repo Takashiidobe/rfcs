@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euf -o pipefail
+
+rm -rf dist/
+
+cp -r rfcs dist
+
+til_count=$(find dist/ -name "*.md" | wc -l)
+
+toc=$(cat <<EOF
+# RFCs
+
+EOF
+)
+
+for f in $(find dist/ -name "*.md"); do
+  dir="$(dirname $f)"  
+  dir="$(basename $dir)" 
+
+  basename_f=$(basename $f ".md")
+  toc=$(printf -- "%s\n- [RFC: %s](%s)" "$toc" "$dir" "$basename_f.html")
+  pandoc $f -o "dist/$basename_f.html" --template="templates/template.html"
+  rm $f
+done
+
+echo "$toc" > dist/index.md
+
+pandoc dist/index.md -o dist/index.html --template="templates/til-template.html" --metadata title="RFCs"
+
+rm dist/index.md

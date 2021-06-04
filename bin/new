@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+set -euf -o pipefail
+
+curr_rfc_number="$(cat .rfc-number 2>/dev/null || echo '0' > .rfc-number)"
+rfc_number="${curr_rfc_number:-0}"
+padded_rfc_number="$(printf '%04d' ${rfc_number})"
+
+email=$(git config --global --get user.email || echo "unknown@email.com")
+author=$(git config --global --get user.name || echo "Anonymous")
+
+author_string="${author} <${email}>"
+
+metadata=$(cat << EOF
+---
+title: Working Title 
+authors: 
+  - ${author_string}
+date: $(date '+%Y-%m-%d')
+state: preproposal 
+---
+EOF
+)
+
+new_rfc_number=$((rfc_number + 1))
+
+mkdir -p "rfcs/${padded_rfc_number}"
+
+echo "${metadata}" > "rfcs/${padded_rfc_number}/README.md" 
+
+echo "${new_rfc_number}" > .rfc-number
