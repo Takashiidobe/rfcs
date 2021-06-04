@@ -25,6 +25,6 @@ done
 
 echo "$toc" > dist/index.md
 
-pandoc dist/index.md -o dist/index.html --template="templates/til-template.html" --metadata title="RFCs"
+pandoc dist/index.md -o dist/index.html --template="templates/index-template.html" --metadata title="RFCs"
 
 rm dist/index.md
