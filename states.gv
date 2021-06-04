@@ -1,0 +1,21 @@
+digraph finite_state_machine {
+  node [shape=circle];
+  rankdir=LR;
+
+  // Ideation transitions
+  Ideation->Discussion[label="finish ideation"];
+  Ideation->Abandoned[label="abandon proposal"];
+  // Discussion transitions
+  Discussion->Ideation[label="back to ideation"];
+  Discussion->Approved[label="approve discussion"];
+  Discussion->Abandoned[label="abandon proposal"];
+  Discussion->Discussion[label="discuss proposal"];
+  // Approved Transitions
+  Approved->Implementing[label="implement proposal"];
+  Approved->Abandoned[label="abandon proposal"];
+  // Implementing Transitions
+  Implementing->Discussion[label="rediscuss proposal"];
+  Implementing->Complete[label="finish implementation"];
+  // Abandoned Transitions
+  Abandoned->Discussion[label="unabandon proposal"];
+}
